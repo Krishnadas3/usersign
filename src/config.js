@@ -1,7 +1,6 @@
 
 const mongoose = require('mongoose')
-const connect = mongoose.connect("mongodb://localhost:27017/admin");
-
+const connect = mongoose.connect("mongodb://127.0.0.1:27017/shoe")
 connect.then(()=>{
     console.log("mongodb connected");
 })
@@ -22,7 +21,7 @@ const LoginSchema = new mongoose.Schema({
 
 // collection here  and set modal
 
-const collection = new mongoose.model("users",LoginSchema)
+const userdb = mongoose.model("userdb",LoginSchema)
 
-module.exports = collection
+module.exports = userdb
 
