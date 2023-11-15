@@ -30,19 +30,55 @@ app.get('/signup',(req,res)=>{
 app.post('/signup',async (req,res)=>{
    const data = {
        name : req.body.username,
+       email: req.body.email,
        password: req.body.password
    }
 
-   const userdata = await userdb.insertMany(data) /// here we are using the collection name 
-   console.log(userdata);                             
+   //check if the user already exists in the database
 
-    res.send('user register successfully ')
+   const existingUser = await userdb.findOne({email:data.email})
 
+   if(existingUser){
+    res.send('User already exits. please choose a diffrenet username ')
+   }else{
+       
+    //hash the password using bcrypt
 
+    const saltRounds = 10;
+
+    const hashedPassword = await bcrypt.hash(data.password,saltRounds)
+
+    data.password = hashedPassword; // replacing the hash passoword with origingal passoword
+
+    const userdata = await userdb.insertMany(data) /// here we are using the collection name 
+    console.log("writed from signup",userdata);                             
+   }
 
 })
 
-const port = 5001
+app.post('/login',async (req,res)=>{
+    try {
+        console.log("entered login page");
+        console.log(req.body);
+        const check = await userdb.findOne({email:req.body.email})
+        if(!check){
+            res.send('user name cannot found')
+            return;
+        }
+
+        // compare the hash passowrd from the datbase with the plain text
+        const isPasswordMatch = await bcrypt.compare(req.body.password,check.password)
+        if(isPasswordMatch){
+            res.render("home",{try:"hai"})
+        }else{
+            res.send("wrong password")
+        }
+    } catch (error)  {
+        res.send("wrong details")
+    }
+})
+
+const port = 5005
 app.listen(port,()=>{
     console.log(`server is running on port:${port}`);
 })

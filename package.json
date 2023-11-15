@@ -7,6 +7,16 @@
     "mongoose": "^8.0.0"
   },
   "scripts": {
+    "test": "echo \"Error:no test specified\" && exit 1",
     "start": "nodemon index.js"
-  }
+  },
+  "name": "loginpage",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
