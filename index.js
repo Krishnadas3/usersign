@@ -3,8 +3,9 @@ const path = require('path')
 const bcrypt = require('bcrypt')
 const userdb = require("./src/config") // here we are put our file name
 const app = express()
-// consvert data into json format
-// app.use(express.join())
+const cookieparser = require('cookie-parser')
+
+
 
 app.use(express.json())
 
@@ -16,6 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.get('/',(req,res)=>{
     res.render(path.join(__dirname,'views/login'))
 })
+
 
 //static file
 
@@ -51,10 +53,18 @@ app.post('/signup',async (req,res)=>{
     data.password = hashedPassword; // replacing the hash passoword with origingal passoword
 
     const userdata = await userdb.insertMany(data) /// here we are using the collection name 
-    console.log("writed from signup",userdata);                             
+    // res.render("index")
+    console.log("writed from signup",userdata); 
+    res.redirect('/login')                            
    }
 
 })
+
+app.get('/login',(req,res)=>{
+    res.render('login')
+})
+
+/// login
 
 app.post('/login',async (req,res)=>{
     try {
@@ -66,14 +76,15 @@ app.post('/login',async (req,res)=>{
             return;
         }
 
-        // compare the hash passowrd from the datbase with the plain text
-        const isPasswordMatch = await bcrypt.compare(req.body.password,check.password)
+        
+        const isPasswordMatch = await bcrypt.compare(req.body.password,check.password)       // compare the hash passowrd from the datbase with the plain text
         if(isPasswordMatch){
-            res.render("home",{try:"hai"})
+            res.render("home")
         }else{
             res.send("wrong password")
         }
     } catch (error)  {
+        console.error(error);
         res.send("wrong details")
     }
 })

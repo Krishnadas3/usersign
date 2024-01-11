@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,48 +20,89 @@
         }
     </style>
 </head>
+
 <body>
 
-<!-- Bootstrap Modal -->
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Signup</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form action="/signup" method="post">
-                <!-- name input -->
-                <div class="form-outline mb-4">
-                    <input type="text" name="username"  id="form1Example13" class="form-control form-control-lg" autocomplete="off" />
-                    <label class="form-label" for="form1Example13">username</label>
-                </div>
-                <!--email input-->
+    <!-- Bootstrap Modal -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Signup</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/signup" method="post">
+                    <!-- name input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" name="username" id="usernameInput" class="form-control form-control-lg" autocomplete="off" />
+                        <label class="form-label" for="usernameInput">Username</label>
+                        <small id="name-error" style="color: red; display: none;">Invalid name format</small>
+                    </div>
+                    <!-- email input -->
+                    <div class="form-outline mb-4">
+                        <input type="email" name="email" id="emailInput" class="form-control form-control-lg" autocomplete="off" />
+                        <label class="form-label" for="emailInput">Email</label>
+                        <small id="email-error" style="color: red; display: none;">Invalid email format</small>
+                    </div>
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="password" name="password" id="passwordInput" class="form-control form-control-lg" />
+                        <label class="form-label" for="passwordInput">Password</label>
+                        <small id="password-error" style="color: red; display: none;">Password must be at least 8 characters long</small>
+                    </div>
                 
-                <div class="form-outline mb-4">
-                    <input type="email" name="email" id="form1Example13" class="form-control form-control-lg" autocomplete="off" />
-                    <label class="form-label" for="form1Example13">Email</label>
-                </div>
+                    <!-- Submit button -->
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="validateAndSubmit()">Signup</button>
+                </form>
                 
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                    <input type="password" name="password" id="form1Example23" class="form-control form-control-lg" />
-                    <label class="form-label" for="form1Example23">Password</label>
-                </div>
+                <script>
+                    function validateAndSubmit() {
+                        var nameInput = document.getElementById("usernameInput");
+                        var emailInput = document.getElementById("emailInput");
+                        var passwordInput = document.getElementById("passwordInput");
+                
+                        var nameError = document.getElementById("name-error");
+                        var emailError = document.getElementById("email-error");
+                        var passwordError = document.getElementById("password-error");
+                
+                        var isValidName = /^[a-zA-Z\s]{3,}$/.test(nameInput.value);
+                        var isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+                        var isValidPassword = passwordInput.value.length >= 8;
+                
+                        if (!isValidName) {
+                            nameError.style.display = "block";
+                        } else {
+                            nameError.style.display = "none";
+                        }
+                
+                        if (!isValidEmail) {
+                            emailError.style.display = "block";
+                        } else {
+                            emailError.style.display = "none";
+                        }
+                
+                        if (!isValidPassword) {
+                            passwordError.style.display = "block";
+                        } else {
+                            passwordError.style.display = "none";
+                        }
+                
+                        // If all validations pass, you can submit the form
+                        if (isValidName && isValidEmail && isValidPassword) {
+                            document.forms[0].submit();
+                        }
+                    }
+                </script>
+                
+                
 
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Signup</button>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Bootstrap JavaScript and jQuery (replace with your own or use CDN) -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JavaScript and jQuery (replace with your own or use CDN) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>
