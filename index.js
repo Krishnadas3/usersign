@@ -45,7 +45,7 @@ app.post('/signup',async (req,res)=>{
    }else{
        
     //hash the password using bcrypt
-
+// jvhjvhjvhj
     const saltRounds = 10;
 
     const hashedPassword = await bcrypt.hash(data.password,saltRounds)
