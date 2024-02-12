@@ -77,7 +77,7 @@ app.post('/login',async (req,res)=>{
         }
 
         
-        const isPasswordMatch = await bcrypt.compare(req.body.password,check.password)       // compare the hash passowrd from the datbase with the plain text
+        const isPasswordMatch = await bcrypt.compare(req.body.password,check.password)       // codmpare the hash passowrd from the datbase with the plain text
         if(isPasswordMatch){
             res.render("home")
         }else{
